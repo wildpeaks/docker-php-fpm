@@ -1,0 +1,8 @@
+* -text
+
+.editorconfig   text
+.gitattributes  text
+.gitignore      text
+*.md            text
+*.yml           text
+Dockerfile      text

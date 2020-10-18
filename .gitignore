@@ -1,0 +1,16 @@
+# Ignore everything by default:
+/*
+/*/
+
+# But allow these files and folders:
+!/LICENSE
+!/README.md
+!/.editorconfig
+!/.gitattributes
+!/.gitignore
+!/.github
+!/Dockerfile
+
+# But make sure to ignore these regardless:
+*.lnk
+*.url
