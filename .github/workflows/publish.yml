@@ -1,0 +1,83 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'Version (e.g. "2.0")'
+
+jobs:
+  publish:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Initialize deployment
+      id: deployment
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const deployment = await github.repos.createDeployment({
+            environment: 'production',
+            ref: '${{ github.sha }}',
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
+          core.setOutput('id', deployment.data.id);
+
+    - name: Build
+      run: docker build --tag php-fpm .
+
+    - name: Create a Github Release
+      id: release
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const release = await github.repos.createRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            tag_name: 'v${{ github.event.inputs.version }}',
+            target_commitish: context.sha,
+            name: '${{ github.event.inputs.version }}',
+            body: '',
+            draft: false,
+            prerelease: false
+          });
+
+    - name: Upload to Docker Hub
+      run: |
+        echo "${{ secrets.DOCKER_HUB_PASS }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+        docker tag php-fpm wildpeaks/php-fpm:${{ github.event.inputs.version }}
+        docker push wildpeaks/php-fpm:${{ github.event.inputs.version }}
+
+    - name: On success
+      if: success()
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.repos.createDeploymentStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            deployment_id: '${{ steps.deployment.outputs.id }}',
+            state: 'success'
+          });
+
+    - name: On error
+      if: failure() || cancelled()
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.repos.createDeploymentStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            deployment_id: '${{ steps.deployment.outputs.id }}',
+            state: 'failure'
+          });
