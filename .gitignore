@@ -9,7 +9,7 @@
 !/.gitattributes
 !/.gitignore
 !/.github
-!/Dockerfile
+!/src
 
 # But make sure to ignore these regardless:
 *.lnk
