@@ -1,8 +1,8 @@
 * -text
 
-.editorconfig   text
-.gitattributes  text
-.gitignore      text
-*.md            text
-*.yml           text
-Dockerfile      text
+.editorconfig   text eol=lf
+.gitattributes  text eol=lf
+.gitignore      text eol=lf
+*.md            text eol=lf
+*.yml           text eol=lf
+Dockerfile      text eol=lf
