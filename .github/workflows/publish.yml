@@ -1,0 +1,64 @@
+name: Publish
+on:
+  workflow_dispatch:
+jobs:
+  publish:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2.3.4
+
+    - name: Initialize deployment
+      id: deployment
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const tag = "latest";
+          const deployment = await github.repos.createDeployment({
+            environment: tag,
+            ref: "${{ github.sha }}",
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
+          core.setOutput("id", deployment.data.id);
+          core.setOutput("tag", 'latest');
+
+    - name: Parameters
+      run: |
+        echo Branch ${{ github.ref }}
+        echo Deployment ${{ steps.deployment.outputs.id }}
+        echo Tag ${{ steps.deployment.outputs.tag }}
+
+    - name: Docker
+      working-directory: ./src
+      run: |
+        echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+        docker build . --tag ${{ secrets.DOCKER_HUB_REPO }}:${{ steps.deployment.outputs.tag }}
+        docker push ${{ secrets.DOCKER_HUB_REPO }}:${{ steps.deployment.outputs.tag }}
+
+    - name: On success
+      if: success()
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.repos.createDeploymentStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            deployment_id: '${{ steps.deployment.outputs.id }}',
+            state: 'success'
+          });
+
+    - name: On error
+      if: failure() || cancelled()
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.repos.createDeploymentStatus({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            deployment_id: '${{ steps.deployment.outputs.id }}',
+            state: 'failure'
+          });
