@@ -4,9 +4,13 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     export DEBCONF_NONINTERACTIVE_SEEN=true; \
     apt-get update \
  && apt-get install -y --no-install-recommends \
-    php-fpm=2:7.4+75 php-json=2:7.4+75 \
-    curl=7.68.0-1ubuntu2.2 libcurl4=7.68.0-1ubuntu2.2 php-curl=2:7.4+75 \
-    php-pgsql=2:7.4+75 php-xml=2:7.4+75 \
+    php-fpm=2:7.4+75 \
+    php-json=2:7.4+75 \
+    curl=7.68.0-1ubuntu2.5 \
+    libcurl4=7.68.0-1ubuntu2.5 \
+    php-curl=2:7.4+75 \
+    php-pgsql=2:7.4+75 \
+    php-xml=2:7.4+75 \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
