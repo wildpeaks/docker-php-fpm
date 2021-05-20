@@ -10,6 +10,7 @@
 !/.gitignore
 !/.github
 !/src
+!/docker-compose.yml
 
 # But make sure to ignore these regardless:
 *.lnk

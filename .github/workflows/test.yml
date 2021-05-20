@@ -1,0 +1,22 @@
+name: Test
+on:
+  push:
+    branches:
+    - main
+    - features/**
+    - dependabot/**
+  pull_request:
+    branches:
+    - main
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - run: docker-compose build src
+    - run: docker-compose up -d
+    # - run: docker-compose exec -T test npm install --prefer-offline --no-audit --no-fund
+    # - run: docker-compose exec -T test npm run test
+    - run: docker-compose down --volumes
+      if: always()
