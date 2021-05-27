@@ -1,4 +1,4 @@
 version: "3.8"
 services:
   src:
-    build: ./src
+    build: ./docker

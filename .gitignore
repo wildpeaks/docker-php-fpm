@@ -9,8 +9,8 @@
 !/.gitattributes
 !/.gitignore
 !/.github
-!/src
 !/docker-compose.yml
+!/docker
 
 # But make sure to ignore these regardless:
 *.lnk
