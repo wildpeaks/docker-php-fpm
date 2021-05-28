@@ -7,6 +7,14 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 
+[package.json]
+indent_style = space
+indent_size = 2
+
+[dependencies.json]
+indent_style = space
+indent_size = 4
+
 [*.yml]
 indent_style = space
 indent_size = 2
