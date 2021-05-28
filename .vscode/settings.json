@@ -1,0 +1,8 @@
+{
+	"files.exclude": {
+		"LICENSE": true,
+		".editorconfig": true,
+		"**/*.lnk": true,
+		"**/*.url": true
+	}
+}
