@@ -10,8 +10,10 @@
 !/.gitignore
 !/.github
 !/.vscode
+!/package.json
 !/docker-compose.yml
 !/docker
+!/test
 
 # But make sure to ignore these regardless:
 *.lnk

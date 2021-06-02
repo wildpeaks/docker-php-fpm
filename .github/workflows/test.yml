@@ -21,10 +21,10 @@ jobs:
         docker-compose build src
         docker-compose up -d
 
-    # - name: Test
-    #   run: |
-    #     docker-compose exec -T test npm install --prefer-offline --no-audit --no-fund --no-update-notifier
-    #     docker-compose exec -T test npm run test
+    - name: Test
+      run: |
+        docker-compose exec -T test npm install --prefer-offline --no-audit --no-fund --no-update-notifier
+        docker-compose exec -T test npm run test
 
     - name: Cleanup
       run: docker-compose down --volumes
