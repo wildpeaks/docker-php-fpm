@@ -1,4 +1,36 @@
-version: "3.8"
 services:
+
   src:
     build: ./docker
+    volumes:
+    - ./test/nginx/www:/var/www/fixtures:ro
+    ports:
+    - 9000:9000
+    networks:
+      default:
+        aliases:
+        - php.local
+
+  proxy:
+    depends_on:
+    - src
+    image: wildpeaks/nginx
+    volumes:
+    - ./test/nginx/sites-enabled/fixtures.conf:/etc/nginx/sites-enabled/fixtures.conf:ro
+    - ./test/nginx/www:/var/www/fixtures:ro
+    ports:
+    - 80:80
+    networks:
+      default:
+        aliases:
+        - proxy.local
+
+  test:
+    depends_on:
+    - proxy
+    image: node:16-alpine
+    command: tail -f /dev/null
+    working_dir: /app
+    volumes:
+    - ./package.json:/app/package.json:ro
+    - ./test/mocha:/app/test/mocha:ro
