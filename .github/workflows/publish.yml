@@ -34,9 +34,9 @@ jobs:
     - name: Docker
       working-directory: ./docker
       run: |
-        echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
-        docker build . --tag ${{ secrets.DOCKER_HUB_REPO }}:${{ steps.deployment.outputs.tag }}
-        docker push ${{ secrets.DOCKER_HUB_REPO }}:${{ steps.deployment.outputs.tag }}
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+        docker build . --tag ghcr.io/${{ secrets.DOCKER_IMAGE }}:${{ steps.deployment.outputs.tag }}
+        docker push ghcr.io/${{ secrets.DOCKER_IMAGE }}:${{ steps.deployment.outputs.tag }}
 
     - name: On success
       if: success()
