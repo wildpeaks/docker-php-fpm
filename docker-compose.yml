@@ -14,7 +14,7 @@ services:
   proxy:
     depends_on:
     - src
-    image: wildpeaks/nginx
+    image: ghcr.io/wildpeaks/nginx
     volumes:
     - ./test/nginx/sites-enabled/fixtures.conf:/etc/nginx/sites-enabled/fixtures.conf:ro
     - ./test/nginx/www:/var/www/fixtures:ro
