@@ -23,7 +23,8 @@ jobs:
             environment: tag,
             ref: "${{ github.sha }}",
             owner: context.repo.owner,
-            repo: context.repo.repo
+            repo: context.repo.repo,
+            required_contexts: []
           });
           core.setOutput("id", deployment.data.id);
           core.setOutput("tag", 'latest');
