@@ -2,7 +2,6 @@ name: Test
 on:
   push:
     branches:
-    - main
     - features/**
     - dependabot/**
   pull_request:
