@@ -19,7 +19,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const tag = "latest";
-          const deployment = await github.repos.createDeployment({
+          const deployment = await github.rest.repos.createDeployment({
             environment: tag,
             ref: "${{ github.sha }}",
             owner: context.repo.owner,
@@ -31,6 +31,7 @@ jobs:
 
     - name: Parameters
       run: |
+        echo SHA ${{ github.sha }}
         echo Branch ${{ github.ref }}
         echo Deployment ${{ steps.deployment.outputs.id }}
         echo Tag ${{ steps.deployment.outputs.tag }}
@@ -48,7 +49,7 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          github.repos.createDeploymentStatus({
+          github.rest.repos.createDeploymentStatus({
             owner: context.repo.owner,
             repo: context.repo.repo,
             deployment_id: '${{ steps.deployment.outputs.id }}',
@@ -61,7 +62,7 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          github.repos.createDeploymentStatus({
+          github.rest.repos.createDeploymentStatus({
             owner: context.repo.owner,
             repo: context.repo.repo,
             deployment_id: '${{ steps.deployment.outputs.id }}',
