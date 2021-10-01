@@ -1,9 +1,8 @@
 /* eslint-env node, mocha */
-/* eslint-disable prefer-arrow-callback */
-"use strict";
-const {strictEqual} = require("assert");
-const fetch = require("node-fetch");
-const FormData = require("form-data");
+import {strictEqual} from "assert";
+import fetch from "node-fetch";
+import FormData from "form-data";
+
 
 it("GET: URLSearchParams", async function () {
 	const data = new URLSearchParams({param1: "AAAAAA"});
