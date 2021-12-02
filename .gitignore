@@ -11,7 +11,7 @@
 !/.github
 !/.vscode
 !/package.json
-!/docker-compose.yml
+!/docker-compose.*.yml
 !/docker
 !/test
 
