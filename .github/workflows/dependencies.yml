@@ -12,10 +12,9 @@ jobs:
       uses: actions/checkout@v2.4.0
 
     - name: Update dependencies
-      working-directory: docker
       run: |
-        sudo apt-get update
-        sh update_dependencies.sh
+        docker-compose -f "docker-compose.update.yml" up
+        docker-compose -f "docker-compose.update.yml" down
 
     - name: Create PR
       uses: peter-evans/create-pull-request@v3
@@ -24,6 +23,5 @@ jobs:
         branch: features/update-dependencies
         title: Update APT packages
         body: Updated dependencies.json
-        delete-branch: true
         labels: dependencies
-        reviewers: cecilemuller
+        delete-branch: true
