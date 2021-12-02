@@ -1,0 +1,9 @@
+services:
+
+  update:
+    image: ubuntu:20.04
+    command: sh /app/update_dependencies.sh
+    working_dir: /app
+    volumes:
+    - ./docker/dependencies.json:/app/dependencies.json
+    - ./docker/update_dependencies.sh:/app/update_dependencies.sh:ro
