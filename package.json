@@ -3,7 +3,7 @@
   "devDependencies": {
     "form-data": "4.0.0",
     "mocha": "10.0.0",
-    "node-fetch": "3.2.10"
+    "node-fetch": "3.3.0"
   },
   "scripts": {
     "test": "mocha test/mocha/*.test.mjs --timeout 5000"
