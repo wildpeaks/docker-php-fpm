@@ -1,8 +1,8 @@
 {
   "php-fpm": "2:7.4+75",
   "php-json": "2:7.4+75",
-  "curl": "7.68.0-1ubuntu2.16",
-  "libcurl4": "7.68.0-1ubuntu2.16",
+  "curl": "7.68.0-1ubuntu2.18",
+  "libcurl4": "7.68.0-1ubuntu2.18",
   "php-curl": "2:7.4+75",
   "php-pgsql": "2:7.4+75",
   "php-xml": "2:7.4+75"
