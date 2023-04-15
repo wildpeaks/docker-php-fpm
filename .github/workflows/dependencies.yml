@@ -17,7 +17,7 @@ jobs:
         docker-compose -f "docker-compose.update.yml" down
 
     - name: Create PR
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v5
       with:
         commit-message: "chore(deps): update dependencies.json"
         branch: features/update-dependencies
